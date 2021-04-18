@@ -4,9 +4,23 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+// mobx
+import { Provider } from "mobx-react"; // MobX 에서 사용하는 Provider
+
+import { BrowserRouter } from "react-router-dom";
+
+// store
+import AccountStore from "./store/Account";
+
+const accountStore = new AccountStore();
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Provider accountStore={accountStore}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,10 +1,10 @@
 import {
-  makeObservable,
+  // makeObservable,
   makeAutoObservable,
-  observable,
-  action,
-  computed,
-  autorun,
+  // observable,
+  // action,
+  // computed,
+  // autorun,
 } from "mobx";
 
 class CounterStore {
@@ -24,6 +24,7 @@ class CounterStore {
   }
 
   increase = () => {
+    console.log(this.number1);
     this.number1++;
   };
 
@@ -32,8 +33,8 @@ class CounterStore {
   };
 
   get sum() {
-    console.log("i am called");
-    return this.number3 + this.number2;
+    console.log("sum computed called");
+    return this.number1 + this.number2;
   }
 }
 

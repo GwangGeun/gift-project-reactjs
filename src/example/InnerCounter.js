@@ -1,7 +1,5 @@
 import { observer, inject } from "mobx-react";
 
-import InnerCounter from "./InnerCounter";
-
 // const Counter = observer(({ counter }) => (
 //   <div>
 //     <h1>hh</h1>
@@ -22,17 +20,16 @@ import InnerCounter from "./InnerCounter";
 //   );
 // });
 
-const Counter = inject("counterStore")(
+const InnerCounter = inject("counterStore")(
   observer((props) => (
     <div>
       {/* <h1>hh</h1> */}
-      {/* <h1>{props.counterStore.number1}</h1> */}
-      <InnerCounter></InnerCounter>
-      <h1>this is outer counter : {props.counterStore.sum}</h1>
-      {/* <button onClick={props.counterStore.increase}>+1</button>
-      <button onClick={props.counterStore.decrease}>-1</button> */}
+      <h1>{props.counterStore.number1}</h1>
+      <h1>{props.counterStore.sum}</h1>
+      <button onClick={props.counterStore.increase}>+1</button>
+      <button onClick={props.counterStore.decrease}>-1</button>
     </div>
   ))
 );
 
-export default Counter;
+export default InnerCounter;
