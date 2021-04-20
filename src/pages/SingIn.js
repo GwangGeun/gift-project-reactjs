@@ -17,6 +17,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+// utils
+import { saveToken, getTokenPayload } from "../utils/LocalStorage";
+
+// api
+import { loginApi } from "../api/pages/SignInApi";
+
 // additional component
 function Copyright() {
   return (
@@ -59,31 +65,35 @@ const SignIn = inject("accountStore")(
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // TODO: 1. localStorage token 참고 후, userInfo 셋팅
-    // 2. 인증된 사용자 접근 방지
+    /*
+     *  mount 시에, 사용자 인증 여부 확인 후 필요한 로직 처리
+     */
     useEffect(() => {
-      console.log("signIn called");
-      if (props.accountStore.user.email != null) {
-        history.goBack();
+      // mobx & localStorage 에 유저 정보가 정상적으로 있으면 -> home 으로 이동
+      if (props.accountStore.auth && getTokenPayload() !== "error") {
+        history.push("/");
       }
-    }, []);
+    }, [history, props.accountStore.auth]);
 
-    // TODO : axios 통해 인증 로직 구현 & 인증된 사용자에 한해 localStorage save
-    const login = () => {
+    /**
+     *  이하 function
+     */
+    const login = async () => {
+      // let result = await request("get", "/api/users/2", "");
+      // console.log(result);
       if (init) {
         setInit(false);
       }
       if (!passwordValidation(password) && !emailValidation(email)) {
-        const user = {
-          email,
-          name: "정광근",
-          nickname: "당근몬스터",
-          gender: "남자",
-          birthday: "1993-03-28",
-          token: "dasfdsfdsf@!#$!S",
-        };
+        const res = await loginApi({
+          email: "test@gmail.com",
+          password: "123abc!!",
+        });
 
-        props.accountStore.login(user);
+        // TODO: 로딩바
+        saveToken(res.data.token);
+        // mobx > 사용자 인증여부 셋팅
+        props.accountStore.login();
         history.push("/");
       }
     };

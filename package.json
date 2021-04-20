@@ -30,9 +30,10 @@
     "react-app-rewired": "^2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build:dev": "react-app-rewired build --mode development --dist",
+    "build:prod": "react-app-rewired build --mode production --dist",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

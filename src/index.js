@@ -12,7 +12,16 @@ import { BrowserRouter } from "react-router-dom";
 // store
 import AccountStore from "./store/Account";
 
+// utils
+import { getTokenPayload } from "./utils/LocalStorage";
 const accountStore = new AccountStore();
+
+// token 이 존재할 경우, mobx auth true 로 지정
+if (getTokenPayload() !== "error") {
+  accountStore.login();
+} else {
+  accountStore.logout();
+}
 
 ReactDOM.render(
   <React.StrictMode>

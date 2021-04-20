@@ -12,6 +12,8 @@ import { Route, Switch } from "react-router-dom";
 import SignIn from "./pages/SingIn";
 import Home from "./pages/Home";
 
+console.log(process.env.NODE_ENV);
+
 const App = inject("accountStore")(
   observer((props) => {
     return (
