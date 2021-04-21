@@ -1,5 +1,3 @@
-import React from "react";
-
 import { makeObservable, observable, action, computed } from "mobx";
 import { deleteToken } from "../utils/LocalStorage";
 

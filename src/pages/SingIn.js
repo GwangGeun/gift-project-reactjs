@@ -79,8 +79,6 @@ const SignIn = inject("accountStore")(
      *  이하 function
      */
     const login = async () => {
-      // let result = await request("get", "/api/users/2", "");
-      // console.log(result);
       if (init) {
         setInit(false);
       }

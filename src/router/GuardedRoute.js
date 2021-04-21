@@ -10,7 +10,10 @@ const GuardedRoute = observer(
       <Route
         {...rest}
         render={(props) =>
-          accountStore.auth === true && getTokenPayload() !== "error" ? (
+          // localstorage & mobx check
+          accountStore.auth === true &&
+          getTokenPayload() !== "error" &&
+          getTokenPayload().email ? (
             <Component {...props} />
           ) : (
             <Redirect to="/signIn" />
