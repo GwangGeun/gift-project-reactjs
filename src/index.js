@@ -11,10 +11,12 @@ import { BrowserRouter } from "react-router-dom";
 
 // store
 import AccountStore from "./store/Account";
+import ComponentStore from "./store/Component";
 
 // utils
 import { getTokenPayload } from "./utils/LocalStorage";
 const accountStore = new AccountStore();
+const componentStore = new ComponentStore();
 
 // token 이 존재할 경우, mobx auth true 로 지정
 if (getTokenPayload() !== "error") {
@@ -24,13 +26,13 @@ if (getTokenPayload() !== "error") {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider accountStore={accountStore}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <BrowserRouter>
+    <Provider accountStore={accountStore} componentStore={componentStore}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

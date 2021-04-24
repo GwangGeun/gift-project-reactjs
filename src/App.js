@@ -2,6 +2,8 @@ import React from "react";
 
 import GuardedRoute from "./router/GuardedRoute";
 
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 // mobx
 import { observer, inject } from "mobx-react";
 
@@ -18,6 +20,7 @@ const App = inject("accountStore")(
   observer((props) => {
     return (
       <div className="App">
+        <CssBaseline />
         <Switch>
           <GuardedRoute
             path="/"

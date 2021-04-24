@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 // router
 import { useHistory } from "react-router-dom";
 
+// compomnent
+import Loading from "../components/Loading";
+
 // mobx
 import { inject, observer } from "mobx-react";
 
 // material ui
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -36,6 +38,13 @@ function Copyright() {
 
 // css
 const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+  loading: {
+    backgroundColor: "red",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -56,7 +65,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // page
-const SignIn = inject("accountStore")(
+const SignIn = inject(
+  "accountStore",
+  "componentStore"
+)(
   observer((props) => {
     const history = useHistory();
     const classes = useStyles();
@@ -79,16 +91,23 @@ const SignIn = inject("accountStore")(
      *  이하 function
      */
     const login = async () => {
+      setInterval(console.log("hello"), 5000);
+      // props.componentStore.setLoading(true, "hello");
       if (init) {
         setInit(false);
       }
       if (!passwordValidation(password) && !emailValidation(email)) {
+        props.componentStore.setLoading(true, "로그인 중...");
         const res = await loginApi({
           email: "test@gmail.com",
           password: "123abc!!",
         });
 
-        // TODO: 로딩바
+        if (res === "401") {
+          return;
+        } else {
+        }
+        props.componentStore.setLoading(false, "");
         saveToken(res.data.token);
         // mobx > 사용자 인증여부 셋팅
         props.accountStore.login();
@@ -125,7 +144,29 @@ const SignIn = inject("accountStore")(
 
     return (
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        {/* <Backdrop
+          className={classes.backdrop}
+          open={props.componentStore.loadingStatus}
+        >
+          <Box position="relative" display="inline-flex">
+            <CircularProgress size={100} />
+            <Box
+              top={0}
+              left={0}
+              bottom={0}
+              right={0}
+              position="absolute"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="body2" component="div">
+                {props.componentStore.loadingContents}
+              </Typography>
+            </Box>
+          </Box>
+        </Backdrop> */}
+        <Loading />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
