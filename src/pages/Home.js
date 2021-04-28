@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 // material ui
-import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 
 // mobx
@@ -14,18 +14,21 @@ import { Link } from "react-router-dom";
 // utils
 import { getTokenPayload } from "../utils/LocalStorage";
 
+// component
+import Header from "../components/Header";
+
 // api
 import { profileApi } from "../api/pages/ProfileApi";
 
-const useStyles = makeStyles((theme) => ({
-  test: {
-    marginLeft: theme.spacing(8),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   test: {
+//     marginLeft: theme.spacing(8),
+//   },
+// }));
 
 const Home = inject("accountStore")(
   observer((props) => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const history = useHistory();
 
     useEffect(() => {
@@ -42,28 +45,14 @@ const Home = inject("accountStore")(
       getApi();
     }, [history, props.accountStore]);
 
-    /**
-     * 이하 로그아웃
-     */
-    const logOut = () => {
-      props.accountStore.logout();
-      history.push("/signIn");
-      return;
-    };
-
     return (
       <>
-        <Link to="/signIn">SignIn</Link>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.test}
-          onClick={logOut}
-        >
-          logOut
-        </Button>
-        {/* <h3>hello home : {props.accountStore.user.email}</h3> */}
-        <h3>hello home</h3>
+        <Container maxWidth="lg">
+          <Header />
+          <main>
+            <h3>hello home </h3>
+          </main>
+        </Container>
       </>
     );
   })

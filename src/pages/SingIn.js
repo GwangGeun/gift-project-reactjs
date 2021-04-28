@@ -144,29 +144,9 @@ const SignIn = inject(
 
     return (
       <Container component="main" maxWidth="xs">
-        {/* <Backdrop
-          className={classes.backdrop}
-          open={props.componentStore.loadingStatus}
-        >
-          <Box position="relative" display="inline-flex">
-            <CircularProgress size={100} />
-            <Box
-              top={0}
-              left={0}
-              bottom={0}
-              right={0}
-              position="absolute"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="body2" component="div">
-                {props.componentStore.loadingContents}
-              </Typography>
-            </Box>
-          </Box>
-        </Backdrop> */}
+        {/* util component */}
         <Loading />
+        {/* main content */}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
