@@ -14,6 +14,7 @@ import { Route, Switch } from "react-router-dom";
 import SignIn from "./pages/SingIn";
 import Home from "./pages/Home";
 import Story from "./pages/Story";
+import StoryDetail from "./pages/StoryDetail";
 import Bookmark from "./pages/Bookmark";
 
 import Blog from "./pages/Temp/Blog";
@@ -33,7 +34,14 @@ const App = inject("accountStore")(
             accountStore={props.accountStore}
           />
           <GuardedRoute
+            path="/story/:year/:month/:day"
+            exact
+            component={StoryDetail}
+            accountStore={props.accountStore}
+          />
+          <GuardedRoute
             path="/story"
+            exact
             component={Story}
             accountStore={props.accountStore}
           />

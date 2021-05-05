@@ -39,11 +39,11 @@ const Header = inject("accountStore")(
   observer((props) => {
     const classes = useStyles();
     const history = useHistory();
-    const activeStyle = {
-      color: "#648dae",
-      fontSize: "1.2rem",
-      fontWeight: "bold",
-    };
+    // const activeStyle = {
+    //   color: "#648dae",
+    //   fontSize: "1.2rem",
+    //   fontWeight: "bold",
+    // };
 
     /**
      * 이하 로그아웃
@@ -86,7 +86,6 @@ const Header = inject("accountStore")(
               variant="body2"
               to={section.url}
               className={classes.toolbarLink}
-              activeStyle={activeStyle}
             >
               {section.title}
             </NavLink>
