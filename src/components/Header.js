@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { inject, observer } from "mobx-react";
 
 // router
-import { useHistory, Link, NavLink } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 
 const sections = [
   { title: "홈", url: "/" },

@@ -10,25 +10,16 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 
 // component
 import Header from "../components/Header";
 import ConfirmDialog from "../components/CofirmDialog";
 import ImageDetailDailog from "../components/ImageDetailDialog";
+
+import StoryDetailText from "../components/StoryDetailText";
+import StoryDetailImage from "../components/StoryDetailImage";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -74,28 +65,9 @@ const StoryDetail = inject(
     const classes = useStyles();
     let { year, month, day } = useParams();
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const anchorOpen = Boolean(anchorEl);
-
-    const anchorClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-
-    const anchorClose = (val) => {
-      props.componentStore.setDialog(
-        true,
-        "해당 사진을 썸네일로 지정하시겠습니까?"
-      );
-
-      setAnchorEl(null);
-    };
-
     const ConfirmDialogAgreeClicked = () => {
       console.log("ConfirmDialogAgreeClicked");
     };
-
-    const options = ["날짜 이동", "썸네일 지정", "삭제"];
-    const ITEM_HEIGHT = 48;
 
     return (
       <>
@@ -107,6 +79,7 @@ const StoryDetail = inject(
               ConfirmDialogAgreeClicked={ConfirmDialogAgreeClicked}
             />
             <ImageDetailDailog />
+            <StoryDetailText />
             {/* first section */}
             <Grid container spacing={3} className={classes.mainGrid}>
               <Grid item xs={8} md={8} className={classes.firstSubGrid}>
@@ -125,7 +98,7 @@ const StoryDetail = inject(
                     aria-label="outlined primary button group"
                   >
                     <Button>글</Button>
-                    <Button>사진</Button>
+                    <Button>일기</Button>
                   </ButtonGroup>
                 </Grid>
               </Grid>
@@ -133,65 +106,14 @@ const StoryDetail = inject(
             {/* first section */}
             <Grid container spacing={3} className={classes.mainGrid}>
               <Grid item xs={12} md={4} className={classes.secondSubGrid}>
-                <Card className={classes.secondSubGridCard}>
-                  {/* background */}
-                  <CardActions
-                    style={{
-                      height: "50px",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <IconButton
-                      aria-label="more"
-                      aria-controls="long-menu"
-                      aria-haspopup="true"
-                      onClick={anchorClick}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                    <Menu
-                      id="long-menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={anchorOpen}
-                      onClose={anchorClose}
-                      PaperProps={{
-                        style: {
-                          maxHeight: ITEM_HEIGHT * 4.5,
-                          width: "20ch",
-                        },
-                      }}
-                    >
-                      {options.map((option) => (
-                        <MenuItem
-                          key={option}
-                          selected={option === "날짜 이동"}
-                          onClick={() => anchorClose(option)}
-                        >
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </CardActions>
-                  {/* content */}
-                  <CardActionArea
-                    component="a"
-                    href="/story/2021/4/21"
-                    className={classes.secondSubGridCardActionArea}
-                  >
-                    <CardMedia
-                      className={classes.secondSubGridCardMedia}
-                      image="https://i.picsum.photos/id/99/200/300.jpg?hmac=Hnlwbe_FdfH-64B_lvRcwVnK7KViI5YgtT8AQRfkFwY"
-                      title="Post title"
-                      component="img"
-                    ></CardMedia>
-                    <CardContent
-                      className={classes.secondSubGridCardContent}
-                    ></CardContent>
-                  </CardActionArea>
-                </Card>
+                <StoryDetailImage></StoryDetailImage>
               </Grid>
+              <Grid
+                item
+                xs={12}
+                md={4}
+                className={classes.secondSubGrid}
+              ></Grid>
             </Grid>
           </main>
         </Container>
