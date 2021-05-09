@@ -13,7 +13,11 @@ class Component {
   imageDetailDialog = false;
   imageDetailDialogId = 0;
 
-  registerTextDetailDailog = true;
+  registerTextDetailDailog = false;
+
+  snackBar = false;
+  snackBarSeverity = "success";
+  snackBarContent = "성공";
 
   constructor() {
     makeObservable(this, {
@@ -25,11 +29,16 @@ class Component {
       imageDetailDialog: observable,
       imageDetailDialogId: observable,
       registerTextDetailDailog: observable,
+      snackBar: observable,
+      snackBarSeverity: observable,
+      snackBarContent: observable,
       // action
       setLoading: action,
       setDialog: action,
       setImageDetailDailog: action,
       setRegisterTextDetailDailog: action,
+      setSnackBar: action,
+      setSnackBarDetail: action,
       // computed
       loadingStatus: computed,
       loadingContents: computed,
@@ -68,6 +77,15 @@ class Component {
     this.registerTextDetailDailog = registerTextDetailDailog;
   };
 
+  setSnackBar = (snackBar) => {
+    this.snackBar = snackBar;
+  };
+
+  setSnackBarDetail = (snackBarSeverity, snackBarContent) => {
+    this.snackBarSeverity = snackBarSeverity;
+    this.snackBarContent = snackBarContent;
+  };
+
   /**
    * 이하 computed
    */
@@ -84,16 +102,26 @@ class Component {
   get dialogContents() {
     return this.dialogContent;
   }
-
+  // image detail dialog
   get imageDetailDialogStatus() {
     return this.imageDetailDialog;
   }
   get imageDetailDialogIds() {
     return this.imageDetailDialogId;
   }
-
+  // text dialog
   get registerTextDetailDailogStatus() {
     return this.registerTextDetailDailog;
+  }
+  // snackbar
+  get snackBarStatus() {
+    return this.snackBar;
+  }
+  get snackBarSeveritys() {
+    return this.snackBarSeverity;
+  }
+  get snackBarContents() {
+    return this.snackBarContent;
   }
 }
 

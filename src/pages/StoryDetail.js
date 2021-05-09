@@ -18,8 +18,10 @@ import Header from "../components/Header";
 import ConfirmDialog from "../components/CofirmDialog";
 import ImageDetailDailog from "../components/ImageDetailDialog";
 
-import StoryDetailText from "../components/StoryDetailText";
+import StoryDetailTextDialog from "../components/StoryDetailTextDialog";
 import StoryDetailImage from "../components/StoryDetailImage";
+import StoryDetailText from "../components/StoryDetailText";
+import Loading from "../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -69,17 +71,23 @@ const StoryDetail = inject(
       console.log("ConfirmDialogAgreeClicked");
     };
 
+    const getListingApi = () => {
+      console.log("getListingApi called");
+    };
+
     return (
       <>
         <Container maxWidth="lg">
           <Header />
           <main>
-            {/* components */}
+            {/* components - utils */}
+            <Loading />
+            {/* components - dialog*/}
             <ConfirmDialog
               ConfirmDialogAgreeClicked={ConfirmDialogAgreeClicked}
             />
             <ImageDetailDailog />
-            <StoryDetailText />
+            <StoryDetailTextDialog getListingApi={getListingApi} />
             {/* first section */}
             <Grid container spacing={3} className={classes.mainGrid}>
               <Grid item xs={8} md={8} className={classes.firstSubGrid}>
@@ -114,12 +122,9 @@ const StoryDetail = inject(
               <Grid item xs={12} md={4} className={classes.secondSubGrid}>
                 <StoryDetailImage></StoryDetailImage>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                md={4}
-                className={classes.secondSubGrid}
-              ></Grid>
+              <Grid item xs={12} md={4} className={classes.secondSubGrid}>
+                <StoryDetailText></StoryDetailText>
+              </Grid>
             </Grid>
           </main>
         </Container>
