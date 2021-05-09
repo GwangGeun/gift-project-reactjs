@@ -6,10 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { green, blue, red, yellow } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
@@ -22,6 +20,8 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import CreateIcon from "@material-ui/icons/Create";
+import CloseIcon from "@material-ui/icons/Close";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -43,16 +43,24 @@ const StoryDetailText = inject(
 
     const [maxWidth] = React.useState("lg");
     const [fullWidth] = React.useState(true);
+    const [purpose, setPurpose] = React.useState("read");
+    const [selectedValue, setSelectedValue] = React.useState("a");
 
     const handleClose = () => {
       props.componentStore.setRegisterTextDetailDailog(false);
     };
 
-    const [selectedValue, setSelectedValue] = React.useState("a");
-
     const handleChange = (event) => {
       console.log(event.target.value);
       setSelectedValue(event.target.value);
+    };
+
+    const changePurpose = () => {
+      if (purpose === "read") {
+        setPurpose("write");
+      } else {
+        setPurpose("read");
+      }
     };
 
     return (
@@ -66,15 +74,25 @@ const StoryDetailText = inject(
         >
           <DialogTitle id="form-dialog-title">
             <div className={classes.header}>
-              <span
-                style={{
-                  marginTop: "10px",
-                }}
+              <div>
+                <IconButton aria-label="modify-text" onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+                <span
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  일기장
+                </span>
+              </div>
+
+              <IconButton
+                color="secondary"
+                aria-label="modify-text"
+                onClick={changePurpose}
               >
-                일기장
-              </span>
-              <IconButton color="secondary" aria-label="add an alarm">
-                <CreateIcon />
+                {purpose === "read" ? <CreateIcon /> : <SaveIcon />}
               </IconButton>
             </div>
           </DialogTitle>
@@ -84,19 +102,66 @@ const StoryDetailText = inject(
               display={{
                 xs: "none",
                 sm: "none",
-                md: "block",
-                lg: "block",
+                md: "none",
+                lg: "none",
                 xl: "block",
               }}
             >
-              <TextField
-                className={classes.textBody}
-                id="outlined-multiline-static"
-                label="일기를 작성해주세요"
-                multiline
-                rows={25}
-                variant="outlined"
-              />
+              {purpose === "read" ? (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={25}
+                  variant="outlined"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={25}
+                  variant="outlined"
+                />
+              )}
+            </Box>
+            <Box
+              p={1}
+              display={{
+                xs: "none",
+                sm: "none",
+                md: "block",
+                lg: "block",
+                xl: "none",
+              }}
+            >
+              {purpose === "read" ? (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={15}
+                  variant="outlined"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={15}
+                  variant="outlined"
+                />
+              )}
             </Box>
             <Box
               p={1}
@@ -108,14 +173,28 @@ const StoryDetailText = inject(
                 xl: "none",
               }}
             >
-              <TextField
-                className={classes.textBody}
-                id="outlined-multiline-static"
-                label="일기를 작성해주세요"
-                multiline
-                rows={10}
-                variant="outlined"
-              />
+              {purpose === "read" ? (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={10}
+                  variant="outlined"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : (
+                <TextField
+                  className={classes.textBody}
+                  id="outlined-multiline-static"
+                  label="일기를 작성해주세요"
+                  multiline
+                  rows={10}
+                  variant="outlined"
+                />
+              )}
             </Box>
             <FormControl
               component="fieldset"
@@ -136,10 +215,18 @@ const StoryDetailText = inject(
                 <FormControlLabel
                   value="100"
                   control={
-                    <RedRadio
-                      checked={selectedValue === "100"}
-                      onChange={handleChange}
-                    />
+                    purpose === "read" ? (
+                      <RedRadio
+                        checked={selectedValue === "100"}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    ) : (
+                      <RedRadio
+                        checked={selectedValue === "100"}
+                        onChange={handleChange}
+                      />
+                    )
                   }
                   label="아주좋음"
                   labelPlacement="start"
@@ -147,10 +234,18 @@ const StoryDetailText = inject(
                 <FormControlLabel
                   value="80"
                   control={
-                    <BlueRadio
-                      checked={selectedValue === "80"}
-                      onChange={handleChange}
-                    />
+                    purpose === "read" ? (
+                      <BlueRadio
+                        checked={selectedValue === "80"}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    ) : (
+                      <BlueRadio
+                        checked={selectedValue === "80"}
+                        onChange={handleChange}
+                      />
+                    )
                   }
                   label="좋음"
                   labelPlacement="start"
@@ -158,10 +253,18 @@ const StoryDetailText = inject(
                 <FormControlLabel
                   value="60"
                   control={
-                    <GreenRadio
-                      checked={selectedValue === "60"}
-                      onChange={handleChange}
-                    />
+                    purpose === "read" ? (
+                      <GreenRadio
+                        checked={selectedValue === "60"}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    ) : (
+                      <GreenRadio
+                        checked={selectedValue === "60"}
+                        onChange={handleChange}
+                      />
+                    )
                   }
                   label="보통"
                   labelPlacement="start"
@@ -169,10 +272,18 @@ const StoryDetailText = inject(
                 <FormControlLabel
                   value="40"
                   control={
-                    <YellowRadio
-                      checked={selectedValue === "40"}
-                      onChange={handleChange}
-                    />
+                    purpose === "read" ? (
+                      <YellowRadio
+                        checked={selectedValue === "40"}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    ) : (
+                      <YellowRadio
+                        checked={selectedValue === "40"}
+                        onChange={handleChange}
+                      />
+                    )
                   }
                   label="살짝 안좋음"
                   labelPlacement="start"
@@ -180,10 +291,18 @@ const StoryDetailText = inject(
                 <FormControlLabel
                   value="20"
                   control={
-                    <Radio
-                      checked={selectedValue === "20"}
-                      onChange={handleChange}
-                    />
+                    purpose === "read" ? (
+                      <Radio
+                        checked={selectedValue === "20"}
+                        onChange={handleChange}
+                        disabled
+                      />
+                    ) : (
+                      <Radio
+                        checked={selectedValue === "20"}
+                        onChange={handleChange}
+                      />
+                    )
                   }
                   label="내일을 기대"
                   labelPlacement="start"
@@ -191,14 +310,6 @@ const StoryDetailText = inject(
               </RadioGroup>
             </FormControl>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Subscribe
-            </Button>
-          </DialogActions>
         </Dialog>
       </>
     );

@@ -97,8 +97,14 @@ const StoryDetail = inject(
                     color="primary"
                     aria-label="outlined primary button group"
                   >
-                    <Button>글</Button>
-                    <Button>일기</Button>
+                    <Button
+                      onClick={() =>
+                        props.componentStore.setRegisterTextDetailDailog(true)
+                      }
+                    >
+                      일기
+                    </Button>
+                    <Button>사진</Button>
                   </ButtonGroup>
                 </Grid>
               </Grid>

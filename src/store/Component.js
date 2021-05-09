@@ -29,6 +29,7 @@ class Component {
       setLoading: action,
       setDialog: action,
       setImageDetailDailog: action,
+      setRegisterTextDetailDailog: action,
       // computed
       loadingStatus: computed,
       loadingContents: computed,
@@ -36,6 +37,7 @@ class Component {
       dialogContents: computed,
       imageDetailDialogStatus: computed,
       imageDetailDialogIds: computed,
+      registerTextDetailDailogStatus: computed,
     });
   }
 
