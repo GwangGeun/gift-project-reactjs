@@ -14,10 +14,19 @@ class Component {
   imageDetailDialogId = 0;
 
   registerTextDetailDailog = false;
+  registerTextDetailDailogId = 0;
+  // read or write
+  registerTextDetailDailogPurpose = "read";
 
   snackBar = false;
   snackBarSeverity = "success";
   snackBarContent = "성공";
+
+  storyDialog = false;
+  // write or modify
+  storyDialogPurpose = "write";
+  storyDialogDate = 0;
+  storyDialogContent = null;
 
   constructor() {
     makeObservable(this, {
@@ -29,16 +38,24 @@ class Component {
       imageDetailDialog: observable,
       imageDetailDialogId: observable,
       registerTextDetailDailog: observable,
+      registerTextDetailDailogId: observable,
+      registerTextDetailDailogPurpose: observable,
       snackBar: observable,
       snackBarSeverity: observable,
       snackBarContent: observable,
+      storyDialog: observable,
+      storyDialogPurpose: observable,
+      storyDialogContent: observable,
+      storyDialogDate: observable,
       // action
       setLoading: action,
       setDialog: action,
       setImageDetailDailog: action,
       setRegisterTextDetailDailog: action,
+      setRegisterTextDetailDailogDetail: action,
       setSnackBar: action,
       setSnackBarDetail: action,
+      setStoryDialog: action,
       // computed
       loadingStatus: computed,
       loadingContents: computed,
@@ -47,6 +64,15 @@ class Component {
       imageDetailDialogStatus: computed,
       imageDetailDialogIds: computed,
       registerTextDetailDailogStatus: computed,
+      registerTextDetailDailogIds: computed,
+      registerTextDetailDailogPurposes: computed,
+      snackBarStatus: computed,
+      snackBarSeveritys: computed,
+      snackBarContents: computed,
+      storyDialogStatus: computed,
+      storyDialogPurposes: computed,
+      storyDialogContents: computed,
+      storyDialogDates: computed,
     });
   }
 
@@ -77,6 +103,14 @@ class Component {
     this.registerTextDetailDailog = registerTextDetailDailog;
   };
 
+  setRegisterTextDetailDailogDetail = (
+    registerTextDetailDailogId,
+    registerTextDetailDailogPurpose
+  ) => {
+    this.registerTextDetailDailogId = registerTextDetailDailogId;
+    this.registerTextDetailDailogPurpose = registerTextDetailDailogPurpose;
+  };
+
   setSnackBar = (snackBar) => {
     this.snackBar = snackBar;
   };
@@ -84,6 +118,18 @@ class Component {
   setSnackBarDetail = (snackBarSeverity, snackBarContent) => {
     this.snackBarSeverity = snackBarSeverity;
     this.snackBarContent = snackBarContent;
+  };
+
+  setStoryDialog = (
+    storyDialog,
+    storyDialogPurpose,
+    storyDialogContent,
+    storyDialogDate
+  ) => {
+    this.storyDialog = storyDialog;
+    this.storyDialogContent = storyDialogContent;
+    this.storyDialogPurpose = storyDialogPurpose;
+    this.storyDialogDate = storyDialogDate;
   };
 
   /**
@@ -113,6 +159,12 @@ class Component {
   get registerTextDetailDailogStatus() {
     return this.registerTextDetailDailog;
   }
+  get registerTextDetailDailogIds() {
+    return this.registerTextDetailDailogId;
+  }
+  get registerTextDetailDailogPurposes() {
+    return this.registerTextDetailDailogPurpose;
+  }
   // snackbar
   get snackBarStatus() {
     return this.snackBar;
@@ -122,6 +174,19 @@ class Component {
   }
   get snackBarContents() {
     return this.snackBarContent;
+  }
+  // story dialog
+  get storyDialogStatus() {
+    return this.storyDialog;
+  }
+  get storyDialogPurposes() {
+    return this.storyDialogPurpose;
+  }
+  get storyDialogContents() {
+    return this.storyDialogContent;
+  }
+  get storyDialogDates() {
+    return this.storyDialogDate;
   }
 }
 

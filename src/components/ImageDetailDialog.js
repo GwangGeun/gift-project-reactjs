@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMediaImg: {
     padding: "20px",
-    width: "100%",
-    height: "95vh",
+    width: "auto",
+    height: "auto",
+    objectFit: "contain",
   },
 }));
 

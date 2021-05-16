@@ -46,8 +46,7 @@ const StoryDetailTextDialog = inject(
 
     const [maxWidth] = React.useState("lg");
     const [fullWidth] = React.useState(true);
-    const [purpose, setPurpose] = React.useState("read");
-    const [selectedValue, setSelectedValue] = React.useState("a");
+    const [selectedValue, setSelectedValue] = React.useState("100");
 
     const handleClose = () => {
       props.componentStore.setRegisterTextDetailDailog(false);
@@ -59,15 +58,15 @@ const StoryDetailTextDialog = inject(
     };
 
     const changePurpose = () => {
-      if (purpose === "read") {
-        setPurpose("write");
+      if (props.componentStore.registerTextDetailDailogPurposes === "read") {
+        props.componentStore.setRegisterTextDetailDailogDetail("id", "write");
       } else {
         // props.componentStore.setLoading(true, "저장 중...");
-        props.getListingApi();
-        props.componentStore.setSnackBar(true);
-        props.componentStore.setSnackBarDetail("success", "저장되었습니다.");
+        // props.getListingApi();
+        // props.componentStore.setSnackBar(true);
+        // props.componentStore.setSnackBarDetail("success", "저장되었습니다.");
 
-        setPurpose("read");
+        props.componentStore.setRegisterTextDetailDailogDetail("id", "read");
       }
     };
 
@@ -102,7 +101,12 @@ const StoryDetailTextDialog = inject(
                 aria-label="modify-text"
                 onClick={changePurpose}
               >
-                {purpose === "read" ? <CreateIcon /> : <SaveIcon />}
+                {props.componentStore.registerTextDetailDailogPurposes ===
+                "read" ? (
+                  <CreateIcon />
+                ) : (
+                  <SaveIcon />
+                )}
               </IconButton>
             </div>
           </DialogTitle>
@@ -117,7 +121,8 @@ const StoryDetailTextDialog = inject(
                 xl: "block",
               }}
             >
-              {purpose === "read" ? (
+              {props.componentStore.registerTextDetailDailogPurposes ===
+              "read" ? (
                 <TextField
                   className={classes.textBody}
                   id="outlined-multiline-static"
@@ -150,7 +155,8 @@ const StoryDetailTextDialog = inject(
                 xl: "none",
               }}
             >
-              {purpose === "read" ? (
+              {props.componentStore.registerTextDetailDailogPurposes ===
+              "read" ? (
                 <TextField
                   className={classes.textBody}
                   id="outlined-multiline-static"
@@ -183,7 +189,8 @@ const StoryDetailTextDialog = inject(
                 xl: "none",
               }}
             >
-              {purpose === "read" ? (
+              {props.componentStore.registerTextDetailDailogPurposes ===
+              "read" ? (
                 <TextField
                   className={classes.textBody}
                   id="outlined-multiline-static"
@@ -225,7 +232,8 @@ const StoryDetailTextDialog = inject(
                 <FormControlLabel
                   value="100"
                   control={
-                    purpose === "read" ? (
+                    props.componentStore.registerTextDetailDailogPurposes ===
+                    "read" ? (
                       <RedRadio
                         checked={selectedValue === "100"}
                         onChange={handleChange}
@@ -244,7 +252,8 @@ const StoryDetailTextDialog = inject(
                 <FormControlLabel
                   value="80"
                   control={
-                    purpose === "read" ? (
+                    props.componentStore.registerTextDetailDailogPurposes ===
+                    "read" ? (
                       <BlueRadio
                         checked={selectedValue === "80"}
                         onChange={handleChange}
@@ -263,7 +272,8 @@ const StoryDetailTextDialog = inject(
                 <FormControlLabel
                   value="60"
                   control={
-                    purpose === "read" ? (
+                    props.componentStore.registerTextDetailDailogPurposes ===
+                    "read" ? (
                       <GreenRadio
                         checked={selectedValue === "60"}
                         onChange={handleChange}
@@ -282,7 +292,8 @@ const StoryDetailTextDialog = inject(
                 <FormControlLabel
                   value="40"
                   control={
-                    purpose === "read" ? (
+                    props.componentStore.registerTextDetailDailogPurposes ===
+                    "read" ? (
                       <YellowRadio
                         checked={selectedValue === "40"}
                         onChange={handleChange}
@@ -301,7 +312,8 @@ const StoryDetailTextDialog = inject(
                 <FormControlLabel
                   value="20"
                   control={
-                    purpose === "read" ? (
+                    props.componentStore.registerTextDetailDailogPurposes ===
+                    "read" ? (
                       <Radio
                         checked={selectedValue === "20"}
                         onChange={handleChange}

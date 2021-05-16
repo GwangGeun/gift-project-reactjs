@@ -4,12 +4,11 @@ import { inject, observer } from "mobx-react";
 
 // date
 import * as dateFns from "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
-import DateFnsUtils from "@date-io/date-fns";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -28,6 +27,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+
 // import CardHeader from "@material-ui/core/CardHeader";
 
 // import Hidden from "@material-ui/core/Hidden";
@@ -37,6 +37,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 // component
 import Header from "../components/Header";
+import StoryDialog from "../components/StoryDialog";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -93,9 +94,15 @@ const Story = inject(
       console.log(res);
     };
 
+    const openStoryDialog = () => {
+      props.componentStore.setStoryDialog(true, "write", null, null);
+    };
+
     return (
       <div>
         <Container maxWidth="lg">
+          {/* components */}
+          <StoryDialog />
           <Header />
           <main>
             {/* first section */}
@@ -122,9 +129,13 @@ const Story = inject(
               <Grid item xs={4} md={4} className={classes.firstSubGrid}>
                 <Grid container justify="flex-end" alignItems="center">
                   <Box mt={2}>
-                    <Fab color="primary" aria-label="add">
-                      <AddIcon />
-                    </Fab>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={openStoryDialog}
+                    >
+                      등록
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>

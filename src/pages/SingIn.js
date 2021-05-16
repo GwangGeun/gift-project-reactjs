@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 // compomnent
 import Loading from "../components/Loading";
+import SnackBar from "../components/SnackBar";
 
 // mobx
 import { inject, observer } from "mobx-react";
@@ -91,27 +92,36 @@ const SignIn = inject(
      *  이하 function
      */
     const login = async () => {
-      setInterval(console.log("hello"), 5000);
       // props.componentStore.setLoading(true, "hello");
       if (init) {
         setInit(false);
       }
       if (!passwordValidation(password) && !emailValidation(email)) {
         props.componentStore.setLoading(true, "로그인 중...");
+        // const res = await loginApi({
+        //   email: "test@gmail.com",
+        //   password: "123abc!!",
+        // });
         const res = await loginApi({
-          email: "test@gmail.com",
-          password: "123abc!!",
+          email,
+          password,
         });
 
-        if (res === "401") {
+        props.componentStore.setLoading(false, "");
+
+        if (res.response && res.response.status === 400) {
+          props.componentStore.setSnackBar(true);
+          props.componentStore.setSnackBarDetail(
+            "error",
+            "인증 정보가 일치하지 않습니다"
+          );
           return;
         } else {
+          saveToken(res.data.token);
+          // mobx > 사용자 인증여부 셋팅
+          props.accountStore.login();
+          history.push("/");
         }
-        props.componentStore.setLoading(false, "");
-        saveToken(res.data.token);
-        // mobx > 사용자 인증여부 셋팅
-        props.accountStore.login();
-        history.push("/");
       }
     };
 
@@ -146,6 +156,7 @@ const SignIn = inject(
       <Container component="main" maxWidth="xs">
         {/* util component */}
         <Loading />
+        <SnackBar />
         {/* main content */}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
